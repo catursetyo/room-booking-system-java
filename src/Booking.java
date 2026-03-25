@@ -98,7 +98,7 @@ public class Booking {
         System.out.println("ID Booking        : " + bookingId);
         System.out.println("Nama User         : " + user.getName());
         System.out.println("Tipe User         : " + user.getUserType());
-        System.out.println("Fakultas          : " + user.getFaculty());
+        System.out.println("Fakultas          : " + user.getMajor());
         System.out.println("Ruangan           : " + room.getRoomName());
         System.out.println("Slot Waktu        : " + timeSlot);
         System.out.println("Jumlah Peserta    : " + participantCount);

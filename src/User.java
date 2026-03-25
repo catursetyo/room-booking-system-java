@@ -1,13 +1,13 @@
 public abstract class User {
     private String userId;
     private String name;
-    private String faculty;
+    private String major;
     private int penaltyPoints;
 
-    public User(String userId, String name, String faculty) {
+    public User(String userId, String name, String major) {
         this.userId = userId;
         this.name = name;
-        this.faculty = faculty;
+        this.major = major;
         this.penaltyPoints = 0;
     }
 
@@ -19,8 +19,8 @@ public abstract class User {
         return name;
     }
 
-    public String getFaculty() {
-        return faculty;
+    public String getMajor() {
+        return major;
     }
 
     public int getPenaltyPoints() {
