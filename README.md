@@ -20,12 +20,9 @@ Untuk membantu menyelesaikan masalah tersebut, dibuatlah program **Sistem Bookin
 - Membatasi jumlah **booking aktif** per user
 - Menampilkan daftar booking dan detail booking
 
-## Class Diagram
-
-<img src="/assets/class-diagram.png">
-
 ## Struktur Repository
-```text
+
+```
 room-booking-system-java/
 ├── README.md
 └── assets/
@@ -44,7 +41,12 @@ room-booking-system-java/
     └── Main.java
 ```
 
+## Class Diagram
+
+<img src="/assets/class-diagram.png">
+
 ## Class yang Diimplementasikan
+
 ### 1. `User`
 Class abstract yang menjadi parent class untuk semua jenis user. Menyimpan data umum seperti `studentId`, `name`, `major`, dan `penaltyPoints`.
 
