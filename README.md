@@ -8,7 +8,7 @@
 
 Di lingkungan kampus, mahasiswa sering membutuhkan ruang belajar untuk diskusi kelompok, latihan presentasi, rapat organisasi, atau persiapan ujian. Permasalahan yang sering terjadi adalah bentrok jadwal, kapasitas ruangan yang tidak sesuai dengan jumlah peserta, tidak adanya prioritas untuk kebutuhan organisasi, serta adanya pengguna yang sudah booking tetapi tidak datang.
 
-Untuk membantu menyelesaikan masalah tersebut, dibuatlah program **Sistem Booking Ruang Belajar Kelompok di Kampus** berbasis **Object-Oriented Programming (OOP)** dengan Java. Program ini dapat mengelola data pengguna, ruangan, jadwal booking, status booking, prioritas booking, serta penalti untuk pengguna yang melakukan `no-show`.
+Untuk membantu menyelesaikan masalah tersebut, dibuatlah program **Sistem Booking Ruang Belajar Kelompok** berbasis **Object-Oriented Programming (OOP)** dengan `Java`. Program ini dapat mengelola data pengguna, ruangan, jadwal booking, status booking, prioritas booking, serta penalti untuk pengguna yang melakukan `no-show`.
 
 ## Fitur Utama
 
@@ -16,11 +16,11 @@ Untuk membantu menyelesaikan masalah tersebut, dibuatlah program **Sistem Bookin
 - Mendeteksi **bentrok jadwal** booking
 - Memvalidasi **kapasitas ruangan**
 - Memberikan **prioritas booking** berdasarkan jenis user
-- Memberikan **penalty point** untuk user yang **no-show**
+- Memberikan **penalty point** untuk user yang tidak hadir setelah melakukan booking
 - Membatasi jumlah **booking aktif** per user
 - Menampilkan daftar booking dan detail booking
 
-## Class Diagram (Mermaid)
+## Class Diagram
 
 <img src="class-diagram.png">
 
@@ -43,15 +43,15 @@ room-booking-system-java/
     └── Main.java
 ```
 
-## Penjelasan Singkat Tiap Class
+## Class yang Diimplementasikan
 ### 1. `User`
-Class abstract yang menjadi parent class untuk semua jenis pengguna. Menyimpan data umum seperti `studentId`, `name`, `major`, dan `penaltyPoints`.
+Class abstract yang menjadi parent class untuk semua jenis user. Menyimpan data umum seperti `studentId`, `name`, `major`, dan `penaltyPoints`.
 
 ### 2. `Student`
-Turunan dari `User` untuk mahasiswa biasa. Memiliki prioritas booking lebih rendah dibanding pengurus organisasi.
+Child class dari `User` untuk mahasiswa biasa. Memiliki prioritas booking lebih rendah dibanding pengurus organisasi.
 
 ### 3. `OrganizationMember`
-Turunan dari `User` untuk pengguna yang juga menjadi pengurus organisasi. Memiliki prioritas booking lebih tinggi.
+Child class dari `User` untuk pengguna yang juga menjadi pengurus organisasi. Memiliki prioritas booking lebih tinggi.
 
 ### 4. `Room`
 Merepresentasikan ruangan yang dapat dibooking, lengkap dengan kapasitas dan informasi projector.
@@ -70,6 +70,30 @@ Class pengelola seluruh booking. Berisi logika validasi booking, check-in, compl
 
 ### 9. `Main`
 Class utama yang menjalankan simulasi program.
+
+## Prinsip OOP yang Diterapkan
+
+### 1. Encapsulation
+Data penting seperti `studentId`, `major`, `capacity`, `status`, dan `penaltyPoints` disimpan dalam atribut `private`. Akses ke data dilakukan melalui getter atau method tertentu agar lebih aman.
+
+### 2. Abstraction
+Class `User` dibuat sebagai **abstract class** karena hanya merepresentasikan konsep umum user. Implementasi detail diturunkan ke class `Student` dan `OrganizationMember`.
+
+### 3. Inheritance
+Program menggunakan pewarisan:
+- `Student` mewarisi `User`
+- `OrganizationMember` mewarisi `User`
+
+Dengan inheritance, atribut dan method umum tidak perlu ditulis ulang.
+
+### 4. Polymorphism
+Method abstract pada `User` seperti:
+- `getUserType()`
+- `getBookingPriority()`
+- `getMaxActiveBookings()`
+- `getNoShowPenalty()`
+
+diimplementasikan secara berbeda pada `Student` dan `OrganizationMember`. Ini menunjukkan bahwa method yang sama dapat memiliki perilaku berbeda tergantung objeknya.
 
 ## Kode Program Java
 Berikut source code program Java yang digunakan pada project ini.
@@ -703,7 +727,7 @@ public class Main {
 ```
 </details>
 
-## Cara Menjalankan Program
+## How To Run
 1. Pastikan semua file `.java` berada pada folder yang sama.
 2. Buka terminal atau command prompt pada folder project.
 3. Compile semua file Java:
@@ -712,82 +736,10 @@ public class Main {
    ```
 4. Jalankan program:
    ```bash
-   java Main
+   java Main.java
    ```
 
-## Screenshot Output
+## Contoh Output
 Berikut screenshot output program saat dijalankan:
 
-![Screenshot Output](output.png)
-
-### Contoh Output Teks
-```text
-Memproses booking B001 ...
-Sukses: booking berhasil dibuat.
-
-Memproses booking B002 ...
-Gagal: slot ruangan bentrok dengan booking lain yang prioritasnya sama atau lebih tinggi.
-
-Memproses booking B003 ...
-Info: booking B001 dibatalkan karena ada user dengan prioritas lebih tinggi.
-Sukses: booking berhasil dibuat.
-
-Memproses booking B004 ...
-Gagal: jumlah peserta melebihi kapasitas ruangan.
-
-Memproses booking B005 ...
-Sukses: booking berhasil dibuat.
-Booking B003 berhasil check-in.
-Booking B003 selesai.
-Booking B005 ditandai no-show.
-
-=============== DAFTAR SEMUA BOOKING ===============
-B001 | Hendra | CCWS 001 | 26-03-2026 | 09:00 - 11:00 | CANCELLED
-B003 | Raka | CCWS 001 | 26-03-2026 | 10:00 - 12:00 | COMPLETED
-B005 | Zaki | CCWS 002 | 26-03-2026 | 13:00 - 15:00 | NO_SHOW
-====================================================
-
-=============== DETAIL BOOKING ===============
-ID Booking        : B003
-Nama User         : Raka
-Tipe User         : Pengurus Organisasi - BEM-F
-Program Studi     : Teknik Informatika
-Ruangan           : CCWS 001
-Slot Waktu        : 26-03-2026 | 10:00 - 12:00
-Jumlah Peserta    : 8
-Tujuan            : Rapat koordinasi acara BEM
-Status            : COMPLETED
-Priority User     : 2
-Waktu Dibuat      : menyesuaikan waktu sistem
-==============================================
-
-=============== RINGKASAN USER ===============
-Hendra | Mahasiswa | penalty: 0
-Zaki | Mahasiswa | penalty: 2
-Raka | Pengurus Organisasi - BEM-F | penalty: 0
-==============================================
-```
-
-## Prinsip-Prinsip OOP yang Diterapkan
-### 1. Encapsulation
-Data penting seperti `studentId`, `major`, `capacity`, `status`, dan `penaltyPoints` disimpan dalam atribut `private`. Akses ke data dilakukan melalui getter atau method tertentu agar lebih aman.
-
-### 2. Abstraction
-Class `User` dibuat sebagai **abstract class** karena hanya merepresentasikan konsep umum user. Implementasi detail diturunkan ke class `Student` dan `OrganizationMember`.
-
-### 3. Inheritance
-Program menggunakan pewarisan:
-- `Student` mewarisi `User`
-- `OrganizationMember` mewarisi `User`
-
-Dengan inheritance, atribut dan method umum tidak perlu ditulis ulang.
-
-### 4. Polymorphism
-Method abstract pada `User` seperti:
-- `getUserType()`
-- `getBookingPriority()`
-- `getMaxActiveBookings()`
-- `getNoShowPenalty()`
-
-diimplementasikan secara berbeda pada `Student` dan `OrganizationMember`. Ini menunjukkan bahwa method yang sama dapat memiliki perilaku berbeda tergantung objeknya.
-
+<img src="output.png">
