@@ -1,3 +1,4 @@
+// dependency
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -11,6 +12,7 @@ public class Booking {
     private BookingStatus status;
     private LocalDateTime createdAt;
 
+    // constructor
     public Booking(String bookingId, User user, Room room, TimeSlot timeSlot, int participantCount, String purpose) {
         this.bookingId = bookingId;
         this.user = user;
@@ -18,83 +20,74 @@ public class Booking {
         this.timeSlot = timeSlot;
         this.participantCount = participantCount;
         this.purpose = purpose;
-        this.status = BookingStatus.PENDING;
+        this.status = BookingStatus.PENDING; // saat booking dibuat, status otomatis PENDING
         this.createdAt = LocalDateTime.now();
     }
 
+    // getter
     public String getBookingId() {
         return bookingId;
     }
-
     public User getUser() {
         return user;
     }
-
     public Room getRoom() {
         return room;
     }
-
     public TimeSlot getTimeSlot() {
         return timeSlot;
     }
-
     public int getParticipantCount() {
         return participantCount;
     }
-
     public String getPurpose() {
         return purpose;
     }
-
     public BookingStatus getStatus() {
         return status;
     }
-
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
+    // update status booking
     public void confirmBooking() {
         if (status == BookingStatus.PENDING) {
             status = BookingStatus.CONFIRMED;
         }
     }
-
     public void cancelBooking() {
         if (status == BookingStatus.PENDING || status == BookingStatus.CONFIRMED) {
             status = BookingStatus.CANCELLED;
         }
     }
-
     public void checkIn() {
         if (status == BookingStatus.CONFIRMED) {
             status = BookingStatus.CHECKED_IN;
         }
     }
-
     public void complete() {
         if (status == BookingStatus.CHECKED_IN) {
             status = BookingStatus.COMPLETED;
         }
     }
-
     public void markNoShow() {
         if (status == BookingStatus.CONFIRMED) {
             status = BookingStatus.NO_SHOW;
-            user.addPenalty(user.getNoShowPenalty());
+            user.addPenalty(user.getNoShowPenalty()); // penaltyPoints bertambah sesuai aturan
         }
     }
-
     public boolean isActive() {
         return status == BookingStatus.PENDING ||
                 status == BookingStatus.CONFIRMED ||
                 status == BookingStatus.CHECKED_IN;
     }
 
+    // detail booking
     public void printDetail() {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 
-        System.out.println("===== DETAIL BOOKING =====");
+        System.out.println("=============== DETAIL BOOKING ===============");
         System.out.println("ID Booking        : " + bookingId);
         System.out.println("Nama User         : " + user.getName());
         System.out.println("Tipe User         : " + user.getUserType());
@@ -106,6 +99,6 @@ public class Booking {
         System.out.println("Status            : " + status);
         System.out.println("Priority User     : " + user.getBookingPriority());
         System.out.println("Waktu Dibuat      : " + createdAt.format(dtf));
-        System.out.println("==========================");
+        System.out.println("==============================================");
     }
 }

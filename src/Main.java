@@ -45,7 +45,7 @@ public class Main {
                 room1,
                 slot1,
                 4,
-                "Belajar UTS OOP"
+                "Belajar ETS OOP"
         );
 
         manager.createBooking(
@@ -89,10 +89,10 @@ public class Main {
         }
 
         System.out.println();
-        System.out.println("===== RINGKASAN USER =====");
+        System.out.println("=============== RINGKASAN USER ===============");
         System.out.println(user1.getName() + " | " + user1.getUserType() + " | penalty: " + user1.getPenaltyPoints());
         System.out.println(user2.getName() + " | " + user2.getUserType() + " | penalty: " + user2.getPenaltyPoints());
         System.out.println(user3.getName() + " | " + user3.getUserType() + " | penalty: " + user3.getPenaltyPoints());
-        System.out.println("==========================");
+        System.out.println("==============================================");
     }
 }

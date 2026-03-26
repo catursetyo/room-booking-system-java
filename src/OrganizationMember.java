@@ -1,8 +1,9 @@
 public class OrganizationMember extends User {
     private String organizationName;
 
-    public OrganizationMember(String userId, String name, String faculty, String organizationName) {
-        super(userId, name, faculty);
+    // constructor
+    public OrganizationMember(String studentId, String name, String major, String organizationName) {
+        super(studentId, name, major);
         this.organizationName = organizationName;
     }
 
@@ -10,23 +11,21 @@ public class OrganizationMember extends User {
         return organizationName;
     }
 
+    // aplikasi abstract methods
     @Override
     public String getUserType() {
         return "Pengurus Organisasi - " + organizationName;
     }
-
     @Override
     public int getBookingPriority() {
         return 2;
     }
-
     @Override
     public int getMaxActiveBookings() {
-        return 4;
+        return 3;
     }
-
     @Override
     public int getNoShowPenalty() {
-        return 1;
+        return 3;
     }
 }
