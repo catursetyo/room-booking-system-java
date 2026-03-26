@@ -22,7 +22,7 @@ Untuk membantu menyelesaikan masalah tersebut, dibuatlah program **Sistem Bookin
 
 ## Class Diagram
 
-<img src="class-diagram.png">
+<img src="/assets/class-diagram.png">
 
 ## Struktur Repository
 ```text
@@ -743,4 +743,4 @@ public class Main {
 ## Contoh Output
 Berikut screenshot output program saat dijalankan:
 
-<img src="output.png">
+<img src="/assets/output.png">
