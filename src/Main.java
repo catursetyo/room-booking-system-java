@@ -3,15 +3,19 @@ import java.time.LocalTime;
 
 public class Main {
     public static void main(String[] args) {
+        // inisiasi bookingManager
         BookingManager manager = new BookingManager();
 
+        // inisiasi room untuk user
         Room room1 = new Room("R001", "CCWS 001", 8, true);
         Room room2 = new Room("R002", "CCWS 002", 6, false);
 
+        // inisiasi user
         User user1 = new Student("U001", "Hendra", "Teknologi Informasi");
         User user2 = new Student("U002", "Zaki", "Sistem Informasi");
         User user3 = new OrganizationMember("U003", "Raka", "Teknik Informatika", "BEM-F");
 
+        // bikin slot waktu
         TimeSlot slot1 = new TimeSlot(
                 LocalDate.of(2026, 3, 26),
                 LocalTime.of(9, 0),
@@ -30,6 +34,7 @@ public class Main {
                 LocalTime.of(15, 0)
         );
 
+        // membuat booking
         manager.createBooking(
                 "B001",
                 user1,
@@ -75,13 +80,15 @@ public class Main {
                 "Latihan presentasi final"
         );
 
+        // memproses status booking
         manager.checkInBooking("B003");
         manager.completeBooking("B003");
-
         manager.markNoShowBooking("B005");
 
+        // tampilin semua booking
         manager.printAllBookings();
 
+        // tampilin detail satu booking
         System.out.println();
         Booking booking = manager.findBookingById("B003");
         if (booking != null) {

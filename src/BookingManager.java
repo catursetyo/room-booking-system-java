@@ -54,6 +54,7 @@ public class BookingManager {
             }
         }
 
+        // kalo lolos validasi, booking statusnya diganti menjadi CONFIRMED
         Booking booking = new Booking(bookingId, user, room, timeSlot, participantCount, purpose);
         booking.confirmBooking();
         bookings.add(booking);
@@ -62,6 +63,7 @@ public class BookingManager {
         return booking;
     }
 
+    // cari booking berdasarkan ID lalu panggil checkIn()
     public boolean checkInBooking(String bookingId) {
         Booking booking = findBookingById(bookingId);
 
@@ -74,6 +76,7 @@ public class BookingManager {
         return true;
     }
 
+    // sama aja kayak yang checkIn
     public boolean completeBooking(String bookingId) {
         Booking booking = findBookingById(bookingId);
 
@@ -107,9 +110,11 @@ public class BookingManager {
         return null;
     }
 
+    // tampilin list booking
     public void printAllBookings() {
         List<Booking> sortedBookings = new ArrayList<>(bookings);
 
+        // urutan berdasarkan tanggal, jam mulai, prioritas
         sortedBookings.sort(
             Comparator.comparing((Booking b) -> b.getTimeSlot().getDate())
                       .thenComparing(b -> b.getTimeSlot().getStartTime())
@@ -129,6 +134,7 @@ public class BookingManager {
         System.out.println("====================================================");
     }
 
+    // hitung berapa banyak booking aktif yang dimiliki user
     private int getActiveBookingCount(User user) {
         int count = 0;
         for (Booking booking : bookings) {
@@ -139,6 +145,7 @@ public class BookingManager {
         return count;
     }
 
+    // cari apakah ada booking lain pada ruangan yang sama dan slot waktu yang bentrok
     private Booking findConflictingBooking(Room room, TimeSlot timeSlot) {
         for (Booking booking : bookings) {
             boolean sameRoom = booking.getRoom().getRoomId().equals(room.getRoomId());
