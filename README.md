@@ -1,11 +1,17 @@
 # Sistem Booking Ruang Belajar Kelompok (CCWS) di Kampus
 
-## Deskripsi Kasus
+- **Nama:** Catur Setyo Ragil
+- **NRP:** 5027251066
+- **Kelas:** Struktur Data dan OOP (B)
+
+## Deskripsi
+
 Di lingkungan kampus, mahasiswa sering membutuhkan ruang belajar untuk diskusi kelompok, latihan presentasi, rapat organisasi, atau persiapan ujian. Permasalahan yang sering terjadi adalah bentrok jadwal, kapasitas ruangan yang tidak sesuai dengan jumlah peserta, tidak adanya prioritas untuk kebutuhan organisasi, serta adanya pengguna yang sudah booking tetapi tidak datang.
 
-Untuk membantu menyelesaikan masalah tersebut, dibuatlah program **Sistem Booking Ruang Belajar Kelompok di Kampus** berbasis **Object-Oriented Programming (OOP)** dengan Java. Program ini dapat mengelola data pengguna, ruangan, jadwal booking, status booking, prioritas booking, serta penalti untuk pengguna yang melakukan **no-show**.
+Untuk membantu menyelesaikan masalah tersebut, dibuatlah program **Sistem Booking Ruang Belajar Kelompok di Kampus** berbasis **Object-Oriented Programming (OOP)** dengan Java. Program ini dapat mengelola data pengguna, ruangan, jadwal booking, status booking, prioritas booking, serta penalti untuk pengguna yang melakukan `no-show`.
 
 ## Fitur Utama
+
 - Mendukung dua jenis user: **Mahasiswa** dan **Pengurus Organisasi**
 - Mendeteksi **bentrok jadwal** booking
 - Memvalidasi **kapasitas ruangan**
@@ -15,115 +21,10 @@ Untuk membantu menyelesaikan masalah tersebut, dibuatlah program **Sistem Bookin
 - Menampilkan daftar booking dan detail booking
 
 ## Class Diagram (Mermaid)
-```mermaid
-classDiagram
-direction LR
-
-class User {
-    <<abstract>>
-    -String studentId
-    -String name
-    -String major
-    -int penaltyPoints
-    +getStudentId() String
-    +getName() String
-    +getMajor() String
-    +getPenaltyPoints() int
-    +addPenalty(points int) void
-    +isSuspended() boolean
-    +getUserType() String
-    +getBookingPriority() int
-    +getMaxActiveBookings() int
-    +getNoShowPenalty() int
-}
-
-class Student {
-    +getUserType() String
-    +getBookingPriority() int
-    +getMaxActiveBookings() int
-    +getNoShowPenalty() int
-}
-
-class OrganizationMember {
-    -String organizationName
-    +getOrganizationName() String
-    +getUserType() String
-    +getBookingPriority() int
-    +getMaxActiveBookings() int
-    +getNoShowPenalty() int
-}
-
-class Room {
-    -String roomId
-    -String roomName
-    -int capacity
-    -boolean hasProjector
-    +getRoomId() String
-    +getRoomName() String
-    +getCapacity() int
-    +hasProjector() boolean
-}
-
-class TimeSlot {
-    -LocalDate date
-    -LocalTime startTime
-    -LocalTime endTime
-    +getDate() LocalDate
-    +getStartTime() LocalTime
-    +getEndTime() LocalTime
-    +conflictsWith(other TimeSlot) boolean
-}
-
-class BookingStatus {
-    <<enumeration>>
-    PENDING
-    CONFIRMED
-    CHECKED_IN
-    CANCELLED
-    NO_SHOW
-    COMPLETED
-}
-
-class Booking {
-    -String bookingId
-    -User user
-    -Room room
-    -TimeSlot timeSlot
-    -int participantCount
-    -String purpose
-    -BookingStatus status
-    -LocalDateTime createdAt
-    +confirmBooking() void
-    +cancelBooking() void
-    +checkIn() void
-    +complete() void
-    +markNoShow() void
-    +isActive() boolean
-    +printDetail() void
-}
-
-class BookingManager {
-    -List~Booking~ bookings
-    +createBooking(...) Booking
-    +checkInBooking(bookingId String) boolean
-    +completeBooking(bookingId String) boolean
-    +markNoShowBooking(bookingId String) boolean
-    +findBookingById(bookingId String) Booking
-    +printAllBookings() void
-}
-
-User <|-- Student
-User <|-- OrganizationMember
-Booking --> User
-Booking --> Room
-Booking --> TimeSlot
-Booking --> BookingStatus
-BookingManager o-- Booking
-```
 
 <img src="class-diagram.png">
 
-## Struktur Project
+## Struktur Repository
 ```text
 room-booking-system-java/
 ├── class-diagram.mmd
@@ -509,7 +410,7 @@ public class Booking {
         System.out.println("ID Booking        : " + bookingId);
         System.out.println("Nama User         : " + user.getName());
         System.out.println("Tipe User         : " + user.getUserType());
-        System.out.println("Fakultas          : " + user.getMajor());
+        System.out.println("Program Studi     : " + user.getMajor());
         System.out.println("Ruangan           : " + room.getRoomName());
         System.out.println("Slot Waktu        : " + timeSlot);
         System.out.println("Jumlah Peserta    : " + participantCount);
@@ -850,7 +751,7 @@ B005 | Zaki | CCWS 002 | 26-03-2026 | 13:00 - 15:00 | NO_SHOW
 ID Booking        : B003
 Nama User         : Raka
 Tipe User         : Pengurus Organisasi - BEM-F
-Fakultas          : Teknik Informatika
+Program Studi     : Teknik Informatika
 Ruangan           : CCWS 001
 Slot Waktu        : 26-03-2026 | 10:00 - 12:00
 Jumlah Peserta    : 8
@@ -890,40 +791,3 @@ Method abstract pada `User` seperti:
 
 diimplementasikan secara berbeda pada `Student` dan `OrganizationMember`. Ini menunjukkan bahwa method yang sama dapat memiliki perilaku berbeda tergantung objeknya.
 
-## Keunikan Program
-Keunikan program ini dibanding program booking ruangan biasa adalah:
-1. Memiliki **prioritas booking** berdasarkan jenis user.
-2. Memiliki sistem **penalty point** untuk user yang tidak hadir saat booking.
-3. Memiliki pembatasan **booking aktif** untuk tiap jenis user.
-4. Memiliki validasi **kapasitas ruangan** dan **deteksi bentrok jadwal**.
-5. Dapat mensimulasikan situasi nyata di kampus, terutama untuk kebutuhan belajar kelompok dan rapat organisasi.
-
-## Kesimpulan
-Program ini menunjukkan bagaimana paradigma OOP dapat digunakan untuk menyelesaikan permasalahan nyata di sekitar kampus. Dengan pembagian class yang jelas, program menjadi lebih terstruktur, mudah dikembangkan, dan mudah dipahami.
-
-## Catatan dan Saran Perbaikan
-Berikut beberapa saran agar project ini lebih rapi dan lebih kuat saat dinilai:
-
-1. **Nama `studentId` bisa diganti menjadi `userId`**  
-   Saat ini `OrganizationMember` juga memakai atribut `studentId`. Secara desain tetap bisa, tetapi secara penamaan akan lebih umum dan lebih konsisten jika diganti menjadi `userId`.
-
-2. **Istilah `major` dan label output `Fakultas` belum konsisten**  
-   Pada code, atribut yang dipakai adalah `major`, tetapi saat output ditampilkan labelnya adalah `Fakultas`. Sebaiknya pilih salah satu istilah saja agar konsisten, misalnya semua memakai `major` atau semua memakai `faculty`.
-
-3. **Method pada `BookingManager` masih selalu menampilkan pesan berhasil**  
-   Method `checkInBooking()`, `completeBooking()`, dan `markNoShowBooking()` langsung menampilkan pesan sukses setelah memanggil method pada object `Booking`, padahal status bisa saja tidak berubah jika urutannya tidak valid. Akan lebih baik jika dilakukan pengecekan status terlebih dahulu sebelum mencetak pesan sukses.
-
-4. **Penalti `OrganizationMember` lebih besar dari `Student`**  
-   Pada code sekarang, `Student` mendapat penalti `2`, sedangkan `OrganizationMember` mendapat penalti `3`. Ini bukan salah, tetapi perlu kamu jelaskan alasannya di presentasi. Misalnya, pengurus organisasi diberi tanggung jawab lebih besar sehingga penalti no-show lebih tinggi.
-
-5. **Signature `createBooking(...)` di diagram masih disingkat**  
-   Pada Mermaid, method `createBooking(...)` masih memakai elipsis. Untuk versi final yang lebih formal, kamu bisa tulis parameter lengkapnya agar diagram lebih informatif.
-
-6. **Method `toString()` di `Room` belum ditampilkan di diagram**  
-   Ini bukan masalah besar, tetapi kalau ingin diagram benar-benar mencerminkan code, method `toString()` bisa ditambahkan juga.
-
-7. **Booking prioritas tinggi membatalkan booking lama secara otomatis**  
-   Ini adalah desain yang unik, tetapi mungkin terasa cukup agresif. Kalau ingin lebih realistis, bisa dipertimbangkan mekanisme notifikasi, persetujuan admin, atau waiting list.
-
----
-**Catatan pribadi agar lolos cek similarity lebih aman:** ubah nama ruangan, nama user, organisasi, tujuan booking, dan narasi README dengan gaya bahasamu sendiri supaya lebih personal.
