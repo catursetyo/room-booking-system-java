@@ -27,10 +27,11 @@ Untuk membantu menyelesaikan masalah tersebut, dibuatlah program **Sistem Bookin
 ## Struktur Repository
 ```text
 room-booking-system-java/
-├── class-diagram.mmd
-├── class-diagram.png
-├── output.png
 ├── README.md
+└── assets/
+    ├── class-diagram.mmd
+    ├── class-diagram.png
+    └── output.png
 └── src/
     ├── User.java
     ├── Student.java
