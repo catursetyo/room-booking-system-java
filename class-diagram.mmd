@@ -1,0 +1,107 @@
+---
+config:
+  theme: redux
+---
+classDiagram
+direction LR
+
+class User {
+    <<abstract>>
+    -String studentId
+    -String name
+    -String major
+    -int penaltyPoints
+    +getStudentId() String
+    +getName() String
+    +getMajor() String
+    +getPenaltyPoints() int
+    +addPenalty(points int) void
+    +isSuspended() boolean
+    +getUserType() String
+    +getBookingPriority() int
+    +getMaxActiveBookings() int
+    +getNoShowPenalty() int
+}
+
+class Student {
+    +getUserType() String
+    +getBookingPriority() int
+    +getMaxActiveBookings() int
+    +getNoShowPenalty() int
+}
+
+class OrganizationMember {
+    -String organizationName
+    +getOrganizationName() String
+    +getUserType() String
+    +getBookingPriority() int
+    +getMaxActiveBookings() int
+    +getNoShowPenalty() int
+}
+
+class Room {
+    -String roomId
+    -String roomName
+    -int capacity
+    -boolean hasProjector
+    +getRoomId() String
+    +getRoomName() String
+    +getCapacity() int
+    +hasProjector() boolean
+}
+
+class TimeSlot {
+    -LocalDate date
+    -LocalTime startTime
+    -LocalTime endTime
+    +getDate() LocalDate
+    +getStartTime() LocalTime
+    +getEndTime() LocalTime
+    +conflictsWith(other TimeSlot) boolean
+}
+
+class BookingStatus {
+    <<enumeration>>
+    PENDING
+    CONFIRMED
+    CHECKED_IN
+    CANCELLED
+    NO_SHOW
+    COMPLETED
+}
+
+class Booking {
+    -String bookingId
+    -User user
+    -Room room
+    -TimeSlot timeSlot
+    -int participantCount
+    -String purpose
+    -BookingStatus status
+    -LocalDateTime createdAt
+    +confirmBooking() void
+    +cancelBooking() void
+    +checkIn() void
+    +complete() void
+    +markNoShow() void
+    +isActive() boolean
+    +printDetail() void
+}
+
+class BookingManager {
+    -List~Booking~ bookings
+    +createBooking(...) Booking
+    +checkInBooking(bookingId String) boolean
+    +completeBooking(bookingId String) boolean
+    +markNoShowBooking(bookingId String) boolean
+    +findBookingById(bookingId String) Booking
+    +printAllBookings() void
+}
+
+User <|-- Student
+User <|-- OrganizationMember
+Booking --> User
+Booking --> Room
+Booking --> TimeSlot
+Booking --> BookingStatus
+BookingManager o-- Booking
